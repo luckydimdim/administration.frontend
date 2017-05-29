@@ -5,9 +5,9 @@ import 'package:intl/intl.dart';
 
 @reflectable
 /**
- * Модель представления договора
+ * Модель представления пользователя
  */
-class UserModel extends Object with JsonConverter, MapConverter {
+class SimpleUserModel extends Object with JsonConverter, MapConverter {
   // Внутренний идентификатор
   String id = '';
 

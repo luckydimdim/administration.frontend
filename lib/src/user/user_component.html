@@ -1,0 +1,118 @@
+<div class="animated fadeIn" *ngIf="model != null">
+	<div class="row">
+		
+		<div class="col-md-6 offset-md-3">
+			
+			<div class="card">
+				<div class="card-header">
+					<i class="fa fa-user"></i>Пользователь
+					
+					<a href="#" [cmRouterLink]="['../UserList']" class="btn btn-sm btn-primary float-xs-right"><i class="icon-action-undo"></i> Назад</a>
+				</div>
+				<div class="card-block">
+					<form #userForm="ngForm">
+						<div class="row form-group">
+							<div class="col-md-6">
+								<label for="time-sheet-month">Логин</label>
+								<input type="text" class="form-control"
+								       id="user-login"
+								       autocomplete="off"
+								       placeholder=""
+								       #userLoginControl="ngForm"
+								       [ngClass]="controlStateClasses(userLoginControl)"
+								       required
+								       maxlength="255"
+								       [class.form-control-danger]="!userLoginControl.valid && (userLoginControl.dirty || userLoginControl.touched)"
+								       [class.form-control-success]="userLoginControl.valid && userLoginControl.touched"
+								       [(ngModel)]="model.login"
+								       ngControl="userLogin" />
+								<em *ngIf="!userLoginControl.valid && (userLoginControl.dirty || userLoginControl.touched)"
+								    class="error form-control-feedback">Некорректный логин</em>
+							</div>
+							<!-- /col -->
+							
+							<div class="col-md-6">
+								<label for="time-sheet-month">Наименование</label>
+								<input type="text" class="form-control"
+								       id="user-name"
+								       autocomplete="off"
+								       placeholder=""
+								       #userNameControl="ngForm"
+								       [ngClass]="controlStateClasses(userNameControl)"
+								       required
+								       maxlength="255"
+								       [class.form-control-danger]="!userNameControl.valid && (userNameControl.dirty || userNameControl.touched)"
+								       [class.form-control-success]="userNameControl.valid && userNameControl.touched"
+								       [(ngModel)]="model.name"
+								       ngControl="userName" />
+								<em *ngIf="!userNameControl.valid && (userNameControl.dirty || userNameControl.touched)"
+								    class="error form-control-feedback">Некорректное наименование</em>
+							</div>
+							<!-- /col -->
+						</div>
+					
+						<h5>Роли</h5>
+						
+						<div class="form-group row">
+							<div class="col-md-12">
+								<div *ngFor="let availableRole of availableRoles">
+									<label>
+										<input type="checkbox"
+										       name="roles"
+										       value="{{availableRole['value']}}"
+										       [(ngModel)]="availableRole['checked']"/>
+										{{availableRole['name']}}
+									</label>
+								</div>
+							</div>
+						</div>
+						
+						<h5>Активация</h5>
+						
+						<div class="row form-group">
+							<div class="col-md-12" *ngIf="model.isActivated">
+								Пользователь активирован
+							</div>
+							<div class="col-md-12" *ngIf="!model.isActivated && !showActControls">
+								<button type="button" (click)="showActControls = true" class="btn btn-tiny">Ссылка на активацию отправлена. Отправить повторно</button>
+							</div>
+							<div *ngIf="!model.isActivated && showActControls">
+								<div class="col-md-6">
+									<input type="email" class="form-control"
+									       id="mail"
+									       autocomplete="off"
+									       placeholder="Укажите почту пользователя"
+									       #userMailControl="ngForm"
+									       [ngClass]="controlStateClasses(userMailControl)"
+									       required
+									       maxlength="255"
+									       [class.form-control-danger]="!userMailControl.valid && (userMailControl.dirty || userMailControl.touched)"
+									       [class.form-control-success]="userMailControl.valid && userMailControl.touched"
+									       [(ngModel)]="actMail"
+									       pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$"
+									       ngControl="userMail" />
+									<em *ngIf="!userMailControl.valid && (userMailControl.dirty || userMailControl.touched)"
+									    class="error form-control-feedback">Некорректная почта</em>
+								</div>
+								<div class="col-md-6">
+									<button type="button" (click)="sendActivationLink()" class="btn btn-primary"><i class="fa fa-key"></i>&nbsp; Отправить ссылку для активации</button>
+								</div>
+							</div>
+						</div>
+					
+						
+						
+					</form>
+				</div>
+				<!-- /card-block -->
+			
+			</div>
+			<!-- /row -->
+		
+		</div>
+		<!-- /col -->
+	
+	</div>
+	<!-- /row -->
+
+</div>

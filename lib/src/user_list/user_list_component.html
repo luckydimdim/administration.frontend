@@ -19,7 +19,7 @@
 						<tbody>
 						<tr *ngFor="let user of users; let i=index">
 							<td>{{ user['login'] }}</td>
-							<td>{{ user['name'] }}</td>
+							<td><a [routerLink]="['User', {id:user['id']}]">{{ user['name'] }}</a></td>
 							<td>{{ (user['roles']).join(', ') }}</td>
 							<td>{{ user['isActivated'] }}</td>
 						</tr>

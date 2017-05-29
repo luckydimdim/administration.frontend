@@ -5,7 +5,7 @@ import 'package:angular2/router.dart';
 
 import 'package:auth/auth_service.dart';
 import '../users_service/users_service.dart';
-import '../user_model.dart';
+import '../simple_user_model.dart';
 
 @Component(
     selector: 'user-list',
@@ -29,9 +29,9 @@ class UserListComponent implements AfterViewInit {
 
   @override
   ngAfterViewInit() async {
-    List<UserModel> userList = await _usersService.getUsers();
+    List<SimpleUserModel> userList = await _usersService.getUsers();
 
-    for (UserModel user in userList) {
+    for (SimpleUserModel user in userList) {
       users.add(user.toMap());
     }
 
