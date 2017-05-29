@@ -1,0 +1,33 @@
+<div class="animated fadeIn">
+	<div class="row">
+		<div class="col-xl-12">
+			<div class="card">
+				<div class="card-header">
+					Список пользователей
+					<span class="btn btn-sm btn-info float-xs-right" (click)="createUser()"> Создать пользователя <i class="fa fa-plus-circle"></i></span>
+				</div>
+				<div class="card-block">
+					<table class="table table-condensed table-striped table-hover" table-click>
+						<thead>
+						<tr>
+							<th>Логин</th>
+							<th>Наименование</th>
+							<th>Роли</th>
+							<th>Активирован</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr *ngFor="let user of users; let i=index">
+							<td>{{ user['login'] }}</td>
+							<td>{{ user['name'] }}</td>
+							<td>{{ (user['roles']).join(', ') }}</td>
+							<td>{{ user['isActivated'] }}</td>
+						</tr>
+						</tbody>
+					</table>
+				
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
