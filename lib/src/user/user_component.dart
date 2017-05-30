@@ -26,7 +26,7 @@ class UserComponent implements OnInit {
   DetailedUserModel model = null;
 
   String actMail = '';
-  bool showActControls = false;
+  bool showActControls = true;
 
   UserComponent(this._userService, this._router, this._authService);
 
@@ -37,20 +37,31 @@ class UserComponent implements OnInit {
     Instruction ci = _router.parent.currentInstruction;
     userId = ci.component.params['id'];
 
-    await _loadData();
+    if (userId == null) {
+      creatingMode = true;
+      model = new DetailedUserModel();
+    }
+    else {
+      await _loadData();
+    }
+
+    createaAailableRoles(model.roles);
 
   }
 
   _loadData() async {
     model = await _userService.getUser(userId);
+    if (model.isActivating)
+      showActControls = false;
+  }
+
+  createaAailableRoles(List<String> roles) {
 
     availableRoles = [
-      {'name':'Подрядчик', 'value':'Contractor', 'checked':model.roles.contains('CONTRACTOR')},
-      {'name':'Заказчик', 'value':'Customer', 'checked':model.roles.contains('CUSTOMER')},
-      {'name':'Администратор', 'value':'Administrator', 'checked':model.roles.contains('ADMINISTRATOR')}
+      {'name':'Подрядчик', 'value':'Contractor', 'checked':roles.contains('CONTRACTOR')},
+      {'name':'Заказчик', 'value':'Customer', 'checked':roles.contains('CUSTOMER')},
+      {'name':'Администратор', 'value':'Administrator', 'checked':roles.contains('ADMINISTRATOR')}
     ];
-
-    showActControls = false;
 
   }
 
@@ -72,6 +83,31 @@ class UserComponent implements OnInit {
    }
 
    await _loadData();
+  }
+
+  save() async {
+
+    model.roles = availableRoles.where((e)=>e['checked'] == true).map((f)=>f['value'].toString()).toList();
+
+    if (creatingMode) {
+
+      var exist = await _userService.checkUserExisting(model.login);
+
+      if (exist) {
+        window.alert('Пользователь с данным логином уже существует');
+        return;
+      }
+
+      userId = await _userService.createUser(model);
+
+      _router.navigate(['User',{'id': userId}]);
+    }
+    else {
+      await _userService.updateUser(model);
+
+      _router.navigate(['../UserList']);
+    }
+
   }
 
 }

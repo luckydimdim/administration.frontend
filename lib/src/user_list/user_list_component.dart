@@ -25,6 +25,7 @@ class UserListComponent implements AfterViewInit {
   UserListComponent(this._router, this._authorizationService, this._usersService);
 
   createUser() {
+    _router.navigate(['UserCreate']);
   }
 
   @override

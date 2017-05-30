@@ -7,6 +7,11 @@
 				<div class="card-header">
 					<i class="fa fa-user"></i>Пользователь
 					
+					
+					<button type="button" class="btn btn-sm btn-outline-success ml-1 float-xs-right" (click)="save()" [disabled]="!userForm.valid">
+						<i class="fa fa-save"></i>
+						&nbsp; Сохранить
+					</button>
 					<a href="#" [cmRouterLink]="['../UserList']" class="btn btn-sm btn-primary float-xs-right"><i class="icon-action-undo"></i> Назад</a>
 				</div>
 				<div class="card-block">
@@ -70,19 +75,22 @@
 						<h5>Активация</h5>
 						
 						<div class="row form-group">
-							<div class="col-md-12" *ngIf="model.isActivated">
+							<div class="col-md-12" *ngIf="creatingMode">
+								Для активации необходимо сохранить пользователя
+							</div>
+							<div class="col-md-12" *ngIf="model.isActivated && !creatingMode">
 								Пользователь активирован
 							</div>
-							<div class="col-md-12" *ngIf="!model.isActivated && !showActControls">
+							<div class="col-md-12" *ngIf="!model.isActivated && !showActControls && !creatingMode">
 								<button type="button" (click)="showActControls = true" class="btn btn-tiny">Ссылка на активацию отправлена. Отправить повторно</button>
 							</div>
-							<div *ngIf="!model.isActivated && showActControls">
+							<div *ngIf="!model.isActivated && showActControls && !creatingMode">
 								<div class="col-md-6">
 									<input type="email" class="form-control"
 									       id="mail"
 									       autocomplete="off"
 									       placeholder="Укажите почту пользователя"
-									       #userMailControl="ngForm"
+									       #userMailControl="ngModel"
 									       [ngClass]="controlStateClasses(userMailControl)"
 									       required
 									       maxlength="255"

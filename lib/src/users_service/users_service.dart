@@ -80,4 +80,70 @@ class UsersService {
 
     return model;
   }
+
+  /**
+   * Изменение данных пользователя
+   */
+  Future updateUser(DetailedUserModel model) async {
+    String jsonString = model.toJsonString();
+
+    _logger.trace('Updating user $jsonString');
+
+    try {
+      await _http.put('${_config.helper.usersUrl}/${model.id}',
+          headers: {'Content-Type': 'application/json'}, body: jsonString);
+      _logger.trace('user successfuly updated');
+    } catch (e) {
+      _logger.error('Failed to update user: $e');
+
+      rethrow;
+    }
+  }
+
+  /**
+   * Создание пользователя
+   */
+  Future<String> createUser(DetailedUserModel model) async {
+    String jsonString = model.toJsonString();
+
+    _logger.trace('Creating user $jsonString');
+
+    Response response = null;
+    try {
+      response =  await _http.post('${_config.helper.usersUrl}',
+          headers: {'Content-Type': 'application/json'}, body: jsonString);
+      _logger.trace('user successfuly created');
+    } catch (e) {
+      _logger.error('Failed to create user: $e');
+
+      rethrow;
+    }
+
+    _logger.trace('user created: $response.');
+
+    return response.body;
+  }
+
+  /**
+   * Создание пользователя
+   */
+  Future<bool> checkUserExisting(String login) async {
+
+    Response response = null;
+    try {
+      response =  await _http.get('${_config.helper.usersUrl}'+ '/is-user-exist/$login',
+          headers: {'Content-Type': 'application/json'});
+
+      _logger.trace('user existing successfuly checked');
+    } catch (e) {
+      _logger.error('Failed to check user existing: $e');
+
+      rethrow;
+    }
+
+    _logger.trace('check user existing: $response.');
+
+    return response.body.toLowerCase() == 'true';
+  }
+
 }
