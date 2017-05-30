@@ -9,8 +9,7 @@ import 'users_service/users_service.dart';
     selector: 'administration',
     templateUrl: 'administration_component.html',
     directives: const [RouterLink, RouterOutlet],
-    providers: const [RouteParams, UsersService]
-)
+    providers: const [RouteParams, UsersService])
 @RouteConfig(const [
   const Route(
       path: '',

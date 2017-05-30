@@ -22,7 +22,8 @@ class UserListComponent implements AfterViewInit {
 
   List<Map> users = new List<Map>();
 
-  UserListComponent(this._router, this._authorizationService, this._usersService);
+  UserListComponent(
+      this._router, this._authorizationService, this._usersService);
 
   createUser() {
     _router.navigate(['UserCreate']);
@@ -38,5 +39,4 @@ class UserListComponent implements AfterViewInit {
 
     return;
   }
-
 }

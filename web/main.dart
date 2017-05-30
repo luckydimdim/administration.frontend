@@ -31,7 +31,8 @@ bool get isDebug =>
       ROUTER_PROVIDERS,
       const Provider(LocationStrategy, useClass: HashLocationStrategy)
     ],
-    template: '<master-layout><administration></administration></master-layout>',
+    template:
+        '<master-layout><administration></administration></master-layout>',
     directives: const [
       MasterLayoutComponent,
       AdministrationComponent,

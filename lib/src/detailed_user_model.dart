@@ -26,6 +26,6 @@ class DetailedUserModel extends Object with JsonConverter, MapConverter {
   bool isActivating = false;
 
   // роли
-  List<String> roles = new List<String>();  // FIXME: заменить на enum, парсить
+  List<String> roles = new List<String>(); // FIXME: заменить на enum, парсить
 
 }

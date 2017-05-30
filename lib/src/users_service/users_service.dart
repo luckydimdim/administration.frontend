@@ -27,8 +27,7 @@ class UsersService {
    * Получение списка пользователей
    */
   Future<List<SimpleUserModel>> getUsers() async {
-    _logger
-        .trace('Requesting users. Url: ${ _config.helper.usersUrl }');
+    _logger.trace('Requesting users. Url: ${ _config.helper.usersUrl }');
 
     Response response = null;
 
@@ -58,8 +57,8 @@ class UsersService {
    * Получение списка пользователей
    */
   Future<DetailedUserModel> getUser(String userId) async {
-    _logger
-        .trace('Requesting user id: $userId. Url: ${ _config.helper.usersUrl }/$userId');
+    _logger.trace(
+        'Requesting user id: $userId. Url: ${ _config.helper.usersUrl }/$userId');
 
     Response response = null;
 
@@ -110,7 +109,7 @@ class UsersService {
 
     Response response = null;
     try {
-      response =  await _http.post('${_config.helper.usersUrl}',
+      response = await _http.post('${_config.helper.usersUrl}',
           headers: {'Content-Type': 'application/json'}, body: jsonString);
       _logger.trace('user successfuly created');
     } catch (e) {
@@ -128,10 +127,10 @@ class UsersService {
    * Создание пользователя
    */
   Future<bool> checkUserExisting(String login) async {
-
     Response response = null;
     try {
-      response =  await _http.get('${_config.helper.usersUrl}'+ '/is-user-exist/$login',
+      response = await _http.get(
+          '${_config.helper.usersUrl}' + '/is-user-exist/$login',
           headers: {'Content-Type': 'application/json'});
 
       _logger.trace('user existing successfuly checked');
@@ -145,5 +144,4 @@ class UsersService {
 
     return response.body.toLowerCase() == 'true';
   }
-
 }
