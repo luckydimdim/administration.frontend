@@ -7,25 +7,38 @@
 					<span class="btn btn-sm btn-info float-xs-right" (click)="createUser()"> Создать пользователя <i class="fa fa-plus-circle"></i></span>
 				</div>
 				<div class="card-block">
-					<table class="table table-condensed table-striped table-hover" table-click>
-						<thead>
-						<tr>
-							<th>Логин</th>
-							<th>Наименование</th>
-							<th>Роли</th>
-							<th>Активирован</th>
-						</tr>
-						</thead>
-						<tbody>
-						<tr *ngFor="let user of users; let i=index">
-							<td>{{ user['login'] }}</td>
-							<td><a [routerLink]="['User', {id:user['id']}]">{{ user['name'] }}</a></td>
-							<td>{{ (user['roles']).join(', ') }}</td>
-							<td>{{ user['isActivated'] }}</td>
-						</tr>
-						</tbody>
-					</table>
-				
+					
+					<grid #grid [dataSource]="usersDataSource" [tableStyleClass]="'table table-condensed table-striped table-hover table-bordered'">
+						<grid-column header="Логин">
+							<template let-user="rowData" grid-template="body">
+								{{ user['login'] }}
+							</template>
+						</grid-column>
+						<grid-column header="Наименование">
+							<template let-user="rowData" grid-template="body">
+								<a [routerLink]="['User', {id:user['id']}]">{{ user['name'] }}</a>
+							</template>
+						</grid-column>
+						<grid-column header="Роли">
+							<template let-user="rowData" grid-template="body">
+								{{user['roles'] | cmFormatRole}}
+							</template>
+						</grid-column>
+						<grid-column header="Статус активации">
+							<template let-user="rowData" grid-template="body">
+								<div *ngIf="user['isActivated']" class="text-md-center"><span class="tag tag-success">Активирован</span></div>
+								<div *ngIf="!user['isActivated']"class="text-md-center"><span class="tag tag-danger">Не активирован</span></div>
+							</template>
+						</grid-column>
+						
+						<grid-column width="3%">
+							<template let-user="rowData" grid-template="body">
+								<div class="text-md-center"><button class="btn btn-tiny" (click)="deleteUser(user['id'])"><i class="fa fa-trash-o"></i></button></div>
+							</template>
+						</grid-column>
+					</grid>
+					
+					
 				</div>
 			</div>
 		</div>

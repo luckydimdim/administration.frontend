@@ -5,13 +5,19 @@
 			
 			<div class="card">
 				<div class="card-header">
-					<i class="fa fa-user"></i>Пользователь
+					<i class="fa fa-user"></i>Пользователь {{model.login}}
 					
 					
 					<button type="button" class="btn btn-sm btn-outline-success ml-1 float-xs-right" (click)="save()" [disabled]="!userForm.valid">
 						<i class="fa fa-save"></i>
-						&nbsp; Сохранить
+						&nbsp;{{creatingMode?'Создать':'Сохранить'}}
 					</button>
+					
+					<button type="button" class="btn btn-sm btn-outline-danger ml-1 float-xs-right" (click)="deleteUser()" *ngIf="!creatingMode">
+						<i class="fa fa-trash-o"></i>
+						&nbsp; Удалить
+					</button>
+					
 					<a href="#" [cmRouterLink]="['../UserList']" class="btn btn-sm btn-primary float-xs-right"><i class="icon-action-undo"></i> Назад</a>
 				</div>
 				<div class="card-block">
@@ -92,7 +98,6 @@
 									       placeholder="Укажите почту пользователя"
 									       #userMailControl="ngForm"
 									       [ngClass]="controlStateClasses(userMailControl)"
-									       required
 									       maxlength="255"
 									       [class.form-control-danger]="!userMailControl.valid && (userMailControl.dirty || userMailControl.touched)"
 									       [class.form-control-success]="userMailControl.valid && userMailControl.touched"

@@ -8,6 +8,7 @@ import 'package:angular_utils/directives.dart';
 import '../users_service/users_service.dart';
 import '../detailed_user_model.dart';
 import 'package:auth/auth_service.dart';
+import 'package:master_layout/breadcrumb_service.dart';
 
 @Component(
     selector: 'user',
@@ -19,6 +20,7 @@ class UserComponent implements OnInit {
   final UsersService _userService;
   final AuthenticationService _authService;
   final Router _router;
+  final BreadcrumbService _breadcrumbService;
 
   bool creatingMode = false;
 
@@ -29,7 +31,8 @@ class UserComponent implements OnInit {
   String actMail = '';
   bool showActControls = true;
 
-  UserComponent(this._userService, this._router, this._authService);
+  UserComponent(this._userService, this._router, this._authService,
+      this._breadcrumbService);
 
   String userId = '';
 
@@ -41,18 +44,24 @@ class UserComponent implements OnInit {
     if (userId == null) {
       creatingMode = true;
       model = new DetailedUserModel();
+      _breadcrumbService.changeDisplayName(
+          this.runtimeType, 'Создание пользователя');
     } else {
       await _loadData();
+      _breadcrumbService.changeDisplayName(
+          this.runtimeType, 'Пользователь ${model.login}');
     }
 
     createaAailableRoles(model.roles);
   }
 
+  // загрузка данных о пользователе
   _loadData() async {
     model = await _userService.getUser(userId);
     if (model.isActivating) showActControls = false;
   }
 
+  // создать список ролей и заполнить их из модели
   createaAailableRoles(List<String> roles) {
     availableRoles = [
       {
@@ -82,6 +91,7 @@ class UserComponent implements OnInit {
         'ng-invalid': control.valid == false
       };
 
+  // отправить ссылку для активации
   sendActivationLink() async {
     if (await _authService.sendActivationLink(model.login, actMail)) {
       window.alert('Ссылка на активацию успешно отправлена');
@@ -92,6 +102,7 @@ class UserComponent implements OnInit {
     await _loadData();
   }
 
+  // сохранить/создать
   save() async {
     model.roles = availableRoles
         .where((e) => e['checked'] == true)
@@ -117,5 +128,14 @@ class UserComponent implements OnInit {
 
       _router.navigate(['../UserList']);
     }
+  }
+
+  // удалить пользователя
+  deleteUser() async {
+    if (!window.confirm('Удалить пользователя?')) return;
+
+    await _userService.deleteUser(userId);
+
+    _router.navigate(['../UserList']);
   }
 }

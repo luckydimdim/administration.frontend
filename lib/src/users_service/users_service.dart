@@ -124,7 +124,7 @@ class UsersService {
   }
 
   /**
-   * Создание пользователя
+   * Проверка существования пользователя
    */
   Future<bool> checkUserExisting(String login) async {
     Response response = null;
@@ -143,5 +143,21 @@ class UsersService {
     _logger.trace('check user existing: $response.');
 
     return response.body.toLowerCase() == 'true';
+  }
+
+  /**
+   * Удаление пользователя
+   */
+  Future deleteUser(String id) async {
+    try {
+      await _http.delete('${_config.helper.usersUrl}' + '/$id',
+          headers: {'Content-Type': 'application/json'});
+
+      _logger.trace('user  successfuly deleted');
+    } catch (e) {
+      _logger.error('Failed to delete user: $e');
+
+      rethrow;
+    }
   }
 }
