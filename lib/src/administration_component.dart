@@ -21,12 +21,12 @@ import 'users_service/users_service.dart';
       path: 'user/:id/',
       component: UserComponent,
       name: 'User',
-      data: UserComponent.DisplayName),
+      data: const {'displayName': UserComponent.DisplayName}),
   const Route(
       path: 'user/create',
       component: UserComponent,
       name: 'UserCreate',
-      data: UserComponent.DisplayName),
+      data: const {'displayName': UserComponent.DisplayName, 'creatingMode': true}),
 ])
 class AdministrationComponent {
   static const DisplayName = const {'displayName': 'Настройка системы'};

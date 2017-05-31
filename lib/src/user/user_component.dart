@@ -15,7 +15,7 @@ import 'package:master_layout/breadcrumb_service.dart';
     templateUrl: 'user_component.html',
     directives: const [CmRouterLink])
 class UserComponent implements OnInit {
-  static const DisplayName = const {'displayName': 'Пользователь'};
+  static const DisplayName = 'Пользователь';
 
   final UsersService _userService;
   final AuthenticationService _authService;
@@ -32,7 +32,14 @@ class UserComponent implements OnInit {
   bool showActControls = true;
 
   UserComponent(this._userService, this._router, this._authService,
-      this._breadcrumbService);
+      this._breadcrumbService, RouteData routeData) {
+
+    if (routeData.get('creatingMode') == true)
+      creatingMode = true;
+    else
+      creatingMode = false;
+
+  }
 
   String userId = '';
 
@@ -42,7 +49,6 @@ class UserComponent implements OnInit {
     userId = ci.component.params['id'];
 
     if (userId == null) {
-      creatingMode = true;
       model = new DetailedUserModel();
       _breadcrumbService.changeDisplayName(
           this.runtimeType, 'Создание пользователя');
