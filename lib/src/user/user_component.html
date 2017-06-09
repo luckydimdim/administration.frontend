@@ -1,13 +1,11 @@
 <div class="animated fadeIn" *ngIf="model != null">
 	<div class="row">
 		
-		<div class="col-md-6 offset-md-3">
+		<div class="col-md-8 offset-md-2">
 			
 			<div class="card">
 				<div class="card-header">
 					<i class="fa fa-user"></i>Пользователь {{model.login}}
-					
-					
 					<button type="button" class="btn btn-sm btn-outline-success ml-1 float-xs-right" (click)="save()" [disabled]="!userForm.valid">
 						<i class="fa fa-save"></i>
 						&nbsp;{{creatingMode?'Создать':'Сохранить'}}
@@ -24,7 +22,7 @@
 					<form #userForm="ngForm">
 						<div class="row form-group">
 							<div class="col-md-6">
-								<label for="time-sheet-month">Логин</label>
+								<label for="user-login">Логин</label>
 								<input type="text" class="form-control"
 								       id="user-login"
 								       autocomplete="off"
@@ -43,7 +41,7 @@
 							<!-- /col -->
 							
 							<div class="col-md-6">
-								<label for="time-sheet-month">Наименование</label>
+								<label for="user-name">Наименование</label>
 								<input type="text" class="form-control"
 								       id="user-name"
 								       autocomplete="off"
@@ -90,7 +88,9 @@
 							<div class="col-md-12" *ngIf="!model.isActivated && !showActControls && !creatingMode">
 								<button type="button" (click)="showActControls = true" class="btn btn-tiny">Ссылка на активацию отправлена. Отправить повторно</button>
 							</div>
+            </div>
 							<div *ngIf="!model.isActivated && showActControls && !creatingMode">
+                <div class="row form-group">
 								<div class="col-md-6">
 									<input type="email" class="form-control"
 									       id="mail"
@@ -121,7 +121,7 @@
 			
 			</div>
 			<!-- /row -->
-		
+
 		</div>
 		<!-- /col -->
 	
