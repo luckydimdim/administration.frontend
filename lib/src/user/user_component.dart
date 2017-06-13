@@ -13,7 +13,7 @@ import 'package:master_layout/breadcrumb_service.dart';
 @Component(
     selector: 'user',
     templateUrl: 'user_component.html',
-    directives: const [CmRouterLink])
+    directives: const [CmRouterLink, CmLoadingBtnDirective])
 class UserComponent implements OnInit {
   static const DisplayName = 'Пользователь';
 
@@ -33,12 +33,10 @@ class UserComponent implements OnInit {
 
   UserComponent(this._userService, this._router, this._authService,
       this._breadcrumbService, RouteData routeData) {
-
     if (routeData.get('creatingMode') == true)
       creatingMode = true;
     else
       creatingMode = false;
-
   }
 
   String userId = '';
@@ -98,7 +96,7 @@ class UserComponent implements OnInit {
       };
 
   // отправить ссылку для активации
-  sendActivationLink() async {
+  Future sendActivationLink() async {
     if (await _authService.sendActivationLink(model.login, actMail)) {
       window.alert('Ссылка на активацию успешно отправлена');
     } else {
@@ -109,7 +107,7 @@ class UserComponent implements OnInit {
   }
 
   // сохранить/создать
-  save() async {
+  Future save() async {
     model.roles = availableRoles
         .where((e) => e['checked'] == true)
         .map((f) => f['value'].toString())
@@ -132,7 +130,7 @@ class UserComponent implements OnInit {
     } else {
       await _userService.updateUser(model);
 
-      _router.navigate(['../UserList']);
+      await _router.navigate(['../UserList']);
     }
   }
 

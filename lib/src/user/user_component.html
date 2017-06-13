@@ -1,4 +1,4 @@
-<div class="animated fadeIn" *ngIf="model != null">
+﻿<div class="animated fadeIn" *ngIf="model != null">
 	<div class="row">
 		
 		<div class="col-md-8 offset-md-2">
@@ -6,14 +6,14 @@
 			<div class="card">
 				<div class="card-header">
 					<i class="fa fa-user"></i>Пользователь {{model.login}}
-					<button type="button" class="btn btn-sm btn-outline-success ml-1 float-xs-right" (click)="save()" [disabled]="!userForm.valid">
+					<button [cmLoadingBtn]="save" type="button" class="btn btn-sm btn-success ml-1 float-xs-right" [disabled]="!userForm.valid">
 						<i class="fa fa-save"></i>
-						&nbsp;{{creatingMode?'Создать':'Сохранить'}}
+						<span class="ladda-label">&nbsp;{{creatingMode?'Создать':'Сохранить'}}</span>
 					</button>
 					
-					<button type="button" class="btn btn-sm btn-outline-danger ml-1 float-xs-right" (click)="deleteUser()" *ngIf="!creatingMode">
+					<button type="button" class="btn btn-sm btn-danger ml-1 float-xs-right" [cmLoadingBtn]="deleteUser" *ngIf="!creatingMode">
 						<i class="fa fa-trash-o"></i>
-						&nbsp; Удалить
+						<span class="ladda-label">&nbsp;Удалить</span>
 					</button>
 					
 					<a href="#" [cmRouterLink]="['../UserList']" class="btn btn-sm btn-primary float-xs-right"><i class="icon-action-undo"></i> Назад</a>
@@ -108,7 +108,7 @@
 									    class="error form-control-feedback">Некорректная почта</em>
 								</div>
 								<div class="col-md-6">
-									<button type="button" (click)="sendActivationLink()" class="btn btn-primary"><i class="fa fa-key"></i>&nbsp; Отправить ссылку для активации</button>
+									<button [cmLoadingBtn]="sendActivationLink" type="button" class="btn btn-primary"><i class="fa fa-key"></i>&nbsp; <span class="ladda-label">Отправить ссылку для активации</span></button>
 								</div>
 							</div>
 						</div>

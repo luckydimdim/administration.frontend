@@ -26,7 +26,10 @@ import 'users_service/users_service.dart';
       path: 'user/create',
       component: UserComponent,
       name: 'UserCreate',
-      data: const {'displayName': UserComponent.DisplayName, 'creatingMode': true}),
+      data: const {
+        'displayName': UserComponent.DisplayName,
+        'creatingMode': true
+      }),
 ])
 class AdministrationComponent {
   static const DisplayName = const {'displayName': 'Настройка системы'};
