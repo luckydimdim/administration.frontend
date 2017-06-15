@@ -31,7 +31,7 @@ class UserListComponent implements AfterViewInit {
 
   bool readOnly = true;
 
-  DataSource usersDataSource = new DataSource();
+  DataSource usersDataSource;
 
   UserListComponent(
       this._router, this._authorizationService, this._usersService);
