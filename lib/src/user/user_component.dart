@@ -13,7 +13,7 @@ import 'package:master_layout/breadcrumb_service.dart';
 @Component(
     selector: 'user',
     templateUrl: 'user_component.html',
-    directives: const [CmRouterLink, CmLoadingBtnDirective])
+    directives: const [CmRouterLink, CmLoadingBtnDirective, CmLoadingSpinComponent])
 class UserComponent implements OnInit {
   static const DisplayName = 'Пользователь';
 
